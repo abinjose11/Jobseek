@@ -85,7 +85,11 @@ export const employer = {
     POST_A_JOB:     "/post-a-job",
     MANAGE_JOBS:    "/manage-jobs",
     CANDIDATES:     "/candidates-list",
-    BOOKMARKS:      "/bookmarked-resumes",
+    AllCANDIDATES:"/can-list",
+    VIEW_APPLIED_CANDIDATES:"/view-candidate",
+    CAND_BOOKMARKS:"/bookmarked-candidates",
+
+    BOOKMARKS:      "/bookmarked-jobs",
     PACKAGES:       "/packages",
     MESSAGES1:      "/messages-style-1",
     MESSAGES2:      "/messages-style-2",

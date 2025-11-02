@@ -83,13 +83,13 @@ function Home1Page() {
                                 <div className="owl-carousel twm-h1-bnr-carousal">
                                     <div className="item">
                                         <div className="slide-img">
-                                            <JobZImage src="images/main-slider/slider1/r-img1.png" alt="#" />
+                                            <JobZImage src="images/main-slider/slider1/job_banner1.png" alt="#" />
                                         </div>
                                     </div>
                                     <div className="item">
                                         <div className="slide-img">
                                             <div className="slide-img">
-                                                <JobZImage src="images/main-slider/slider1/r-img2.png" alt="#" />
+                                                <JobZImage src="images/main-slider/slider1/job_banner2.png" alt="#" />
                                             </div>
                                         </div>
                                     </div>

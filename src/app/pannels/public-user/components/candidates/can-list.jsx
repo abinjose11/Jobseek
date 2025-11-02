@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { publicUser } from "../../../../../globals/route-names";
+import { publicUser,empRoute,employer } from "../../../../../globals/route-names";
 import JobZImage from "../../../../common/jobz-img";
 
 import SectionPagination from "../../sections/common/section-pagination";
@@ -45,7 +45,7 @@ function CandidateListPage() {
                                                 <div className="twm-candidates-tag"><span>Featured</span></div>
                                             </div>
                                             <div className="twm-mid-content">
-                                                <NavLink to={publicUser.candidate.DETAIL1} className="twm-job-title">
+                                                <NavLink to={empRoute(employer.VIEW_APPLIED_CANDIDATES)} className="twm-job-title">
                                                     <h4>Wanda Montgomery </h4>
                                                 </NavLink>
                                                 <p>Charted Accountant</p>
@@ -55,7 +55,7 @@ function CandidateListPage() {
                                                         <div className="twm-jobs-vacancies">$20<span>/ Day</span></div>
                                                     </div>
                                                     <div className="twm-right-btn">
-                                                        <NavLink to={publicUser.candidate.DETAIL1} className="twm-view-prifile site-text-primary">View Profile</NavLink>
+                                                        <NavLink to={empRoute(employer.VIEW_APPLIED_CANDIDATES)} className="twm-view-prifile site-text-primary">View Profile</NavLink>
                                                     </div>
                                                 </div>
                                             </div>
@@ -70,7 +70,7 @@ function CandidateListPage() {
                                                 <div className="twm-candidates-tag"><span>Featured</span></div>
                                             </div>
                                             <div className="twm-mid-content">
-                                                <NavLink to={publicUser.candidate.DETAIL1} className="twm-job-title">
+                                                <NavLink to={empRoute(employer.VIEW_APPLIED_CANDIDATES)} className="twm-job-title">
                                                     <h4>Peter Hawkins</h4>
                                                 </NavLink>
                                                 <p>Medical Professed</p>
@@ -80,7 +80,7 @@ function CandidateListPage() {
                                                         <div className="twm-jobs-vacancies">$7<span>/ Hour</span></div>
                                                     </div>
                                                     <div className="twm-right-btn">
-                                                        <NavLink to={publicUser.candidate.DETAIL1} className="twm-view-prifile site-text-primary">View Profile</NavLink>
+                                                        <NavLink to={empRoute(employer.VIEW_APPLIED_CANDIDATES)} className="twm-view-prifile site-text-primary">View Profile</NavLink>
                                                     </div>
                                                 </div>
                                             </div>
@@ -95,7 +95,7 @@ function CandidateListPage() {
                                                 <div className="twm-candidates-tag"><span>Featured</span></div>
                                             </div>
                                             <div className="twm-mid-content">
-                                                <NavLink to={publicUser.candidate.DETAIL1} className="twm-job-title">
+                                                <NavLink to={empRoute(employer.VIEW_APPLIED_CANDIDATES)} className="twm-job-title">
                                                     <h4>Ralph Johnson</h4>
                                                 </NavLink>
                                                 <p>Bank Manger</p>
@@ -105,7 +105,7 @@ function CandidateListPage() {
                                                         <div className="twm-jobs-vacancies">$180<span>/ Day</span></div>
                                                     </div>
                                                     <div className="twm-right-btn">
-                                                        <NavLink to={publicUser.candidate.DETAIL1} className="twm-view-prifile site-text-primary">View Profile</NavLink>
+                                                        <NavLink to={empRoute(employer.VIEW_APPLIED_CANDIDATES)} className="twm-view-prifile site-text-primary">View Profile</NavLink>
                                                     </div>
                                                 </div>
                                             </div>
@@ -120,7 +120,7 @@ function CandidateListPage() {
                                                 <div className="twm-candidates-tag"><span>Featured</span></div>
                                             </div>
                                             <div className="twm-mid-content">
-                                                <NavLink to={publicUser.candidate.DETAIL1} className="twm-job-title">
+                                                <NavLink to={empRoute(employer.VIEW_APPLIED_CANDIDATES)} className="twm-job-title">
                                                     <h4>Randall Henderson </h4>
                                                 </NavLink>
                                                 <p>IT Contractor</p>
@@ -130,7 +130,7 @@ function CandidateListPage() {
                                                         <div className="twm-jobs-vacancies">$90<span>/ Week</span></div>
                                                     </div>
                                                     <div className="twm-right-btn">
-                                                        <NavLink to={publicUser.candidate.DETAIL1} className="twm-view-prifile site-text-primary">View Profile</NavLink>
+                                                        <NavLink to={empRoute(employer.VIEW_APPLIED_CANDIDATES)} className="twm-view-prifile site-text-primary">View Profile</NavLink>
                                                     </div>
                                                 </div>
                                             </div>
@@ -145,7 +145,7 @@ function CandidateListPage() {
                                                 <div className="twm-candidates-tag"><span>Featured</span></div>
                                             </div>
                                             <div className="twm-mid-content">
-                                                <NavLink to={publicUser.candidate.DETAIL1} className="twm-job-title">
+                                                <NavLink to={empRoute(employer.VIEW_APPLIED_CANDIDATES)} className="twm-job-title">
                                                     <h4>Randall Warren</h4>
                                                 </NavLink>
                                                 <p>Digital &amp; Creative</p>
@@ -155,7 +155,7 @@ function CandidateListPage() {
                                                         <div className="twm-jobs-vacancies">$95<span>/ Day</span></div>
                                                     </div>
                                                     <div className="twm-right-btn">
-                                                        <NavLink to={publicUser.candidate.DETAIL1} className="twm-view-prifile site-text-primary">View Profile</NavLink>
+                                                        <NavLink to={empRoute(employer.VIEW_APPLIED_CANDIDATES)} className="twm-view-prifile site-text-primary">View Profile</NavLink>
                                                     </div>
                                                 </div>
                                             </div>
@@ -170,7 +170,7 @@ function CandidateListPage() {
                                                 <div className="twm-candidates-tag"><span>Featured</span></div>
                                             </div>
                                             <div className="twm-mid-content">
-                                                <NavLink to={publicUser.candidate.DETAIL1} className="twm-job-title">
+                                                <NavLink to={empRoute(employer.VIEW_APPLIED_CANDIDATES)} className="twm-job-title">
                                                     <h4>Christina Fischer </h4>
                                                 </NavLink>
                                                 <p>Charity &amp; Voluntary</p>
@@ -180,7 +180,7 @@ function CandidateListPage() {
                                                         <div className="twm-jobs-vacancies">$19<span>/ Hour</span></div>
                                                     </div>
                                                     <div className="twm-right-btn">
-                                                        <NavLink to={publicUser.candidate.DETAIL1} className="twm-view-prifile site-text-primary">View Profile</NavLink>
+                                                        <NavLink to={empRoute(employer.VIEW_APPLIED_CANDIDATES)} className="twm-view-prifile site-text-primary">View Profile</NavLink>
                                                     </div>
                                                 </div>
                                             </div>
@@ -195,7 +195,7 @@ function CandidateListPage() {
                                                 <div className="twm-candidates-tag"><span>Featured</span></div>
                                             </div>
                                             <div className="twm-mid-content">
-                                                <NavLink to={publicUser.candidate.DETAIL1} className="twm-job-title">
+                                                <NavLink to={empRoute(employer.VIEW_APPLIED_CANDIDATES)} className="twm-job-title">
                                                     <h4>Wanda Willis </h4>
                                                 </NavLink>
                                                 <p>Marketing &amp; PR</p>
@@ -205,7 +205,7 @@ function CandidateListPage() {
                                                         <div className="twm-jobs-vacancies">$12<span>/ Day</span></div>
                                                     </div>
                                                     <div className="twm-right-btn">
-                                                        <NavLink to={publicUser.candidate.DETAIL1} className="twm-view-prifile site-text-primary">View Profile</NavLink>
+                                                        <NavLink to={empRoute(employer.VIEW_APPLIED_CANDIDATES)} className="twm-view-prifile site-text-primary">View Profile</NavLink>
                                                     </div>
                                                 </div>
                                             </div>
@@ -220,7 +220,7 @@ function CandidateListPage() {
                                                 <div className="twm-candidates-tag"><span>Featured</span></div>
                                             </div>
                                             <div className="twm-mid-content">
-                                                <NavLink to={publicUser.candidate.DETAIL1} className="twm-job-title">
+                                                <NavLink to={empRoute(employer.VIEW_APPLIED_CANDIDATES)} className="twm-job-title">
                                                     <h4>Peter Hawkins</h4>
                                                 </NavLink>
                                                 <p>Public Sector</p>
@@ -230,7 +230,7 @@ function CandidateListPage() {
                                                         <div className="twm-jobs-vacancies">$7<span>/ Hour</span></div>
                                                     </div>
                                                     <div className="twm-right-btn">
-                                                        <NavLink to={publicUser.candidate.DETAIL1} className="twm-view-prifile site-text-primary">View Profile</NavLink>
+                                                        <NavLink to={empRoute(employer.VIEW_APPLIED_CANDIDATES)} className="twm-view-prifile site-text-primary">View Profile</NavLink>
                                                     </div>
                                                 </div>
                                             </div>
@@ -245,7 +245,7 @@ function CandidateListPage() {
                                                 <div className="twm-candidates-tag"><span>Featured</span></div>
                                             </div>
                                             <div className="twm-mid-content">
-                                                <NavLink to={publicUser.candidate.DETAIL1} className="twm-job-title">
+                                                <NavLink to={empRoute(employer.VIEW_APPLIED_CANDIDATES)} className="twm-job-title">
                                                     <h4>Kathleen Moreno </h4>
                                                 </NavLink>
                                                 <p>Sales &amp; Marketing</p>
@@ -255,7 +255,7 @@ function CandidateListPage() {
                                                         <div className="twm-jobs-vacancies">$125<span>/ Week</span></div>
                                                     </div>
                                                     <div className="twm-right-btn">
-                                                        <NavLink to={publicUser.candidate.DETAIL1} className="twm-view-prifile site-text-primary">View Profile</NavLink>
+                                                        <NavLink to={empRoute(employer.VIEW_APPLIED_CANDIDATES)} className="twm-view-prifile site-text-primary">View Profile</NavLink>
                                                     </div>
                                                 </div>
                                             </div>

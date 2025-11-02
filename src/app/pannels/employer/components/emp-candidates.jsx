@@ -1,10 +1,11 @@
 import { useState } from "react";
 import JobZImage from "../../../common/jobz-img";
 import { loadScript } from "../../../../globals/constants";
-
+import { NavLink } from "react-router-dom";
+import { employer,empRoute } from "../../../../globals/route-names";
 function EmpCandidatesPage() {
 
-    useState(()=> {
+    useState(() => {
         loadScript("js/custom.js");
     })
 
@@ -61,9 +62,11 @@ function EmpCandidatesPage() {
                                                 <div className="twm-table-controls">
                                                     <ul className="twm-DT-controls-icon list-unstyled">
                                                         <li>
-                                                            <button title="View profile" data-bs-toggle="tooltip" data-bs-placement="top">
-                                                                <span className="fa fa-eye" />
-                                                            </button>
+
+
+
+                                                            <NavLink to={empRoute(employer.VIEW_APPLIED_CANDIDATES)} className="twm-job-title"> <button title="View profile" data-bs-placement="top" ><span className="fa fa-eye" /></button></NavLink>
+
                                                         </li>
                                                         <li>
                                                             <button title="Send message" data-bs-toggle="tooltip" data-bs-placement="top">

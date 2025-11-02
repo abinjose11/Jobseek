@@ -36,7 +36,6 @@ function CanSidebarSection() {
                     <li><a href="candidate-jobs-applied.html"><i className="fa fa-suitcase" /> Applied Jobs</a></li>
                     <li><a href="candidate-my-resume.html"><i className="fa fa-receipt" /> My Resume</a></li>
                     <li><a href="candidate-saved-jobs.html"><i className="fa fa-file-download" /> Saved Jobs</a></li>
-                    <li><a href="candidate-cv-manager.html"><i className="fa fa-paperclip" /> CV Manager</a></li>
                     <li><a href="candidate-job-alert.html"><i className="fa fa-bell" /> Job Alerts</a></li>
                     <li><a href="candidate-change-password.html"><i className="fa fa-fingerprint" /> Change Passeord</a></li>
                     <li><a href="candidate-chat.html"><i className="fa fa-comments" />Chat</a></li>

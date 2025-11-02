@@ -1,12 +1,12 @@
 import JobZImage from "../../../common/jobz-img";
 
-function EmpBookmarksPage() {
+function JobBookmarksPage() {
     return (
         <>
             <div>
                 <div className="wt-admin-right-page-header clearfix">
                     <h2>Bookmark</h2>
-                    <div className="breadcrumbs"><a href="#">Home</a><a href="#">Dasboard</a><span>Bookmarked Candidates</span></div>
+                    <div className="breadcrumbs"><a href="#">Home</a><a href="#">Dasboard</a><span>Bookmarked Jobs</span></div>
                 </div>
                 <div className="twm-pro-view-chart-wrap">
                     <div className="col-lg-12 col-md-12 mb-4">
@@ -371,4 +371,4 @@ function EmpBookmarksPage() {
         </>
     )
 }
-export default EmpBookmarksPage;
+export default JobBookmarksPage;

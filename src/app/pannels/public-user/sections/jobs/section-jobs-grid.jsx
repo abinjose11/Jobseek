@@ -16,7 +16,7 @@ function SectionJobsGrid() {
                         <span className="twm-job-post-duration">1 days ago</span>
                         <div className="twm-jobs-category green"><span className="twm-bg-green">New</span></div>
                         <div className="twm-mid-content">
-                            <NavLink to={publicUser.jobs.DETAIL1} className="twm-job-title">
+                            <NavLink to={publicUser.jobs.DETAIL2} className="twm-job-title">
                                 <h4>Senior Web Designer , Developer</h4>
                             </NavLink>
                             <p className="twm-job-address">1363-1385 Sunset Blvd Los Angeles, CA 90026, USA</p>
@@ -24,7 +24,7 @@ function SectionJobsGrid() {
                         </div>
                         <div className="twm-right-content">
                             <div className="twm-jobs-amount">$2500 <span>/ Month</span></div>
-                            <NavLink to={publicUser.jobs.DETAIL1} className="twm-jobs-browse site-text-primary">Browse Job</NavLink>
+                            <NavLink to={publicUser.jobs.DETAIL2} className="twm-jobs-browse site-text-primary">Browse Job</NavLink>
                         </div>
                     </div>
                 </div>
@@ -37,7 +37,7 @@ function SectionJobsGrid() {
                         <span className="twm-job-post-duration">15 days ago</span>
                         <div className="twm-jobs-category green"><span className="twm-bg-brown">Intership</span></div>
                         <div className="twm-mid-content">
-                            <NavLink to={publicUser.jobs.DETAIL1} className="twm-job-title">
+                            <NavLink to={publicUser.jobs.DETAIL2} className="twm-job-title">
                                 <h4>Senior Rolling Stock Technician</h4>
                             </NavLink>
                             <p className="twm-job-address">1363-1385 Sunset Blvd Los Angeles, CA 90026, USA</p>
@@ -45,7 +45,7 @@ function SectionJobsGrid() {
                         </div>
                         <div className="twm-right-content">
                             <div className="twm-jobs-amount">$7 <span>/ Hour</span></div>
-                            <NavLink to={publicUser.jobs.DETAIL1} className="twm-jobs-browse site-text-primary">Browse Job</NavLink>
+                            <NavLink to={publicUser.jobs.DETAIL2} className="twm-jobs-browse site-text-primary">Browse Job</NavLink>
                         </div>
                     </div>
                 </div>
@@ -58,7 +58,7 @@ function SectionJobsGrid() {
                         <span className="twm-job-post-duration">6 Month ago</span>
                         <div className="twm-jobs-category green"><span className="twm-bg-purple">Fulltime</span></div>
                         <div className="twm-mid-content">
-                            <NavLink to={publicUser.jobs.DETAIL1} className="twm-job-title">
+                            <NavLink to={publicUser.jobs.DETAIL2} className="twm-job-title">
                                 <h4 className="twm-job-title">IT Department Manager</h4>
                             </NavLink>
                             <p className="twm-job-address">1363-1385 Sunset Blvd Los Angeles, CA 90026, USA</p>
@@ -66,7 +66,7 @@ function SectionJobsGrid() {
                         </div>
                         <div className="twm-right-content">
                             <div className="twm-jobs-amount">$2500 <span>/ Month</span></div>
-                            <NavLink to={publicUser.jobs.DETAIL1} className="twm-jobs-browse site-text-primary">Browse Job</NavLink>
+                            <NavLink to={publicUser.jobs.DETAIL2} className="twm-jobs-browse site-text-primary">Browse Job</NavLink>
                         </div>
                     </div>
                 </div>
@@ -79,7 +79,7 @@ function SectionJobsGrid() {
                         <span className="twm-job-post-duration">2 days ago</span>
                         <div className="twm-jobs-category green"><span className="twm-bg-sky">Freelancer</span></div>
                         <div className="twm-mid-content">
-                            <NavLink to={publicUser.jobs.DETAIL1} className="twm-job-title">
+                            <NavLink to={publicUser.jobs.DETAIL2} className="twm-job-title">
                                 <h4 className="twm-job-title">Art Production Specialist</h4>
                             </NavLink>
                             <p className="twm-job-address">1363-1385 Sunset Blvd Los Angeles, CA 90026, USA</p>
@@ -87,7 +87,7 @@ function SectionJobsGrid() {
                         </div>
                         <div className="twm-right-content">
                             <div className="twm-jobs-amount">$1800 <span>/ Month</span></div>
-                            <NavLink to={publicUser.jobs.DETAIL1} className="twm-jobs-browse site-text-primary">Browse Job</NavLink>
+                            <NavLink to={publicUser.jobs.DETAIL2} className="twm-jobs-browse site-text-primary">Browse Job</NavLink>
                         </div>
                     </div>
                 </div>
@@ -100,7 +100,7 @@ function SectionJobsGrid() {
                         <span className="twm-job-post-duration">1 days ago</span>
                         <div className="twm-jobs-category green"><span className="twm-bg-golden">Temporary</span></div>
                         <div className="twm-mid-content">
-                            <NavLink to={publicUser.jobs.DETAIL1} className="twm-job-title">
+                            <NavLink to={publicUser.jobs.DETAIL2} className="twm-job-title">
                                 <h4 className="twm-job-title">Recreation &amp; Fitness Worker</h4>
                             </NavLink>
                             <p className="twm-job-address">1363-1385 Sunset Blvd Los Angeles, CA 90026, USA</p>
@@ -108,7 +108,7 @@ function SectionJobsGrid() {
                         </div>
                         <div className="twm-right-content">
                             <div className="twm-jobs-amount">$1000 <span>/ Month</span></div>
-                            <NavLink to={publicUser.jobs.DETAIL1} className="twm-jobs-browse site-text-primary">Browse Job</NavLink>
+                            <NavLink to={publicUser.jobs.DETAIL2} className="twm-jobs-browse site-text-primary">Browse Job</NavLink>
                         </div>
                     </div>
                 </div>
@@ -121,7 +121,7 @@ function SectionJobsGrid() {
                         <span className="twm-job-post-duration">1 days ago</span>
                         <div className="twm-jobs-category green"><span className="twm-bg-green">New</span></div>
                         <div className="twm-mid-content">
-                            <NavLink to={publicUser.jobs.DETAIL1} className="twm-job-title">
+                            <NavLink to={publicUser.jobs.DETAIL2} className="twm-job-title">
                                 <h4>Senior Web Designer , Developer</h4>
                             </NavLink>
                             <p className="twm-job-address">1363-1385 Sunset Blvd Los Angeles, CA 90026, USA</p>
@@ -129,7 +129,7 @@ function SectionJobsGrid() {
                         </div>
                         <div className="twm-right-content">
                             <div className="twm-jobs-amount">$19 <span>/ Hour</span></div>
-                            <NavLink to={publicUser.jobs.DETAIL1} className="twm-jobs-browse site-text-primary">Browse Job</NavLink>
+                            <NavLink to={publicUser.jobs.DETAIL2} className="twm-jobs-browse site-text-primary">Browse Job</NavLink>
                         </div>
                     </div>
                 </div>
@@ -142,7 +142,7 @@ function SectionJobsGrid() {
                         <span className="twm-job-post-duration">1 days ago</span>
                         <div className="twm-jobs-category green"><span className="twm-bg-green">New</span></div>
                         <div className="twm-mid-content">
-                            <NavLink to={publicUser.jobs.DETAIL1} className="twm-job-title">
+                            <NavLink to={publicUser.jobs.DETAIL2} className="twm-job-title">
                                 <h4>Senior Web Designer , Developer</h4>
                             </NavLink>
                             <p className="twm-job-address">1363-1385 Sunset Blvd Los Angeles, CA 90026, USA</p>
@@ -150,7 +150,7 @@ function SectionJobsGrid() {
                         </div>
                         <div className="twm-right-content">
                             <div className="twm-jobs-amount">$2500 <span>/ Month</span></div>
-                            <NavLink to={publicUser.jobs.DETAIL1} className="twm-jobs-browse site-text-primary">Browse Job</NavLink>
+                            <NavLink to={publicUser.jobs.DETAIL2} className="twm-jobs-browse site-text-primary">Browse Job</NavLink>
                         </div>
                     </div>
                 </div>
@@ -163,7 +163,7 @@ function SectionJobsGrid() {
                         <span className="twm-job-post-duration">15 days ago</span>
                         <div className="twm-jobs-category green"><span className="twm-bg-brown">Intership</span></div>
                         <div className="twm-mid-content">
-                            <NavLink to={publicUser.jobs.DETAIL1} className="twm-job-title">
+                            <NavLink to={publicUser.jobs.DETAIL2} className="twm-job-title">
                                 <h4>Senior Rolling Stock Technician</h4>
                             </NavLink>
                             <p className="twm-job-address">1363-1385 Sunset Blvd Los Angeles, CA 90026, USA</p>
@@ -171,7 +171,7 @@ function SectionJobsGrid() {
                         </div>
                         <div className="twm-right-content">
                             <div className="twm-jobs-amount">$7 <span>/ Hour</span></div>
-                            <NavLink to={publicUser.jobs.DETAIL1} className="twm-jobs-browse site-text-primary">Browse Job</NavLink>
+                            <NavLink to={publicUser.jobs.DETAIL2} className="twm-jobs-browse site-text-primary">Browse Job</NavLink>
                         </div>
                     </div>
                 </div>
@@ -184,7 +184,7 @@ function SectionJobsGrid() {
                         <span className="twm-job-post-duration">6 Month ago</span>
                         <div className="twm-jobs-category green"><span className="twm-bg-purple">Fulltime</span></div>
                         <div className="twm-mid-content">
-                            <NavLink to={publicUser.jobs.DETAIL1} className="twm-job-title">
+                            <NavLink to={publicUser.jobs.DETAIL2} className="twm-job-title">
                                 <h4 className="twm-job-title">IT Department Manager</h4>
                             </NavLink>
                             <p className="twm-job-address">1363-1385 Sunset Blvd Los Angeles, CA 90026, USA</p>
@@ -192,7 +192,7 @@ function SectionJobsGrid() {
                         </div>
                         <div className="twm-right-content">
                             <div className="twm-jobs-amount">$2500 <span>/ Month</span></div>
-                            <NavLink to={publicUser.jobs.DETAIL1} className="twm-jobs-browse site-text-primary">Browse Job</NavLink>
+                            <NavLink to={publicUser.jobs.DETAIL2} className="twm-jobs-browse site-text-primary">Browse Job</NavLink>
                         </div>
                     </div>
                 </div>
@@ -205,7 +205,7 @@ function SectionJobsGrid() {
                         <span className="twm-job-post-duration">2 days ago</span>
                         <div className="twm-jobs-category green"><span className="twm-bg-sky">Freelancer</span></div>
                         <div className="twm-mid-content">
-                            <NavLink to={publicUser.jobs.DETAIL1} className="twm-job-title">
+                            <NavLink to={publicUser.jobs.DETAIL2} className="twm-job-title">
                                 <h4 className="twm-job-title">Art Production Specialist</h4>
                             </NavLink>
                             <p className="twm-job-address">1363-1385 Sunset Blvd Los Angeles, CA 90026, USA</p>
@@ -213,7 +213,7 @@ function SectionJobsGrid() {
                         </div>
                         <div className="twm-right-content">
                             <div className="twm-jobs-amount">$1800 <span>/ Month</span></div>
-                            <NavLink to={publicUser.jobs.DETAIL1} className="twm-jobs-browse site-text-primary">Browse Job</NavLink>
+                            <NavLink to={publicUser.jobs.DETAIL2} className="twm-jobs-browse site-text-primary">Browse Job</NavLink>
                         </div>
                     </div>
                 </div>

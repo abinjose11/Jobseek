@@ -41,11 +41,11 @@ function EmployersGridPage() {
                                                 <JobZImage src="images/jobs-company/pic1.jpg" alt="#" />
                                             </div>
                                             <div className="twm-mid-content">
-                                                <NavLink to={publicUser.employer.DETAIL1} className="twm-job-title">
+                                                <NavLink to={publicUser.employer.DETAIL2} className="twm-job-title">
                                                     <h4>Herbal Ltd</h4>
                                                 </NavLink>
                                                 <p className="twm-job-address">1385 Sunset Blvd Los Angeles, CA 90026, USA</p>
-                                                <NavLink to={publicUser.employer.DETAIL1} className="twm-job-websites site-text-primary">Accountancy</NavLink>
+                                                <NavLink to={publicUser.employer.DETAIL2} className="twm-job-websites site-text-primary">Accountancy</NavLink>
                                             </div>
                                             <div className="twm-right-content">
                                                 <div className="twm-jobs-vacancies"><span>25</span>Vacancies</div>
@@ -58,11 +58,11 @@ function EmployersGridPage() {
                                                 <JobZImage src="images/jobs-company/pic2.jpg" alt="#" />
                                             </div>
                                             <div className="twm-mid-content">
-                                                <NavLink to={publicUser.employer.DETAIL1} className="twm-job-title">
+                                                <NavLink to={publicUser.employer.DETAIL2} className="twm-job-title">
                                                     <h4>Artistre Studio PVT Ltd</h4>
                                                 </NavLink>
                                                 <p className="twm-job-address">1385 Sunset Blvd Los Angeles, CA 90026, USA</p>
-                                                <NavLink to={publicUser.employer.DETAIL1} className="twm-job-websites site-text-primary">IT Contractor</NavLink>
+                                                <NavLink to={publicUser.employer.DETAIL2} className="twm-job-websites site-text-primary">IT Contractor</NavLink>
                                             </div>
                                             <div className="twm-right-content">
                                                 <div className="twm-jobs-vacancies"><span>30</span>Vacancies</div>
@@ -75,11 +75,11 @@ function EmployersGridPage() {
                                                 <JobZImage src="images/jobs-company/pic3.jpg" alt="#" />
                                             </div>
                                             <div className="twm-mid-content">
-                                                <NavLink to={publicUser.employer.DETAIL1} className="twm-job-title">
+                                                <NavLink to={publicUser.employer.DETAIL2} className="twm-job-title">
                                                     <h4 className="twm-job-title">Wins Developers</h4>
                                                 </NavLink>
                                                 <p className="twm-job-address">1385 Sunset Blvd Los Angeles, CA 90026, USA</p>
-                                                <NavLink to={publicUser.employer.DETAIL1} className="twm-job-websites site-text-primary">Banking</NavLink>
+                                                <NavLink to={publicUser.employer.DETAIL2} className="twm-job-websites site-text-primary">Banking</NavLink>
                                             </div>
                                             <div className="twm-right-content">
                                                 <div className="twm-jobs-vacancies"><span>32</span>Vacancies</div>
@@ -92,11 +92,11 @@ function EmployersGridPage() {
                                                 <JobZImage src="images/jobs-company/pic4.jpg" alt="#" />
                                             </div>
                                             <div className="twm-mid-content">
-                                                <NavLink to={publicUser.employer.DETAIL1} className="twm-job-title">
+                                                <NavLink to={publicUser.employer.DETAIL2} className="twm-job-title">
                                                     <h4 className="twm-job-title">Thewebmax PVT Ltd</h4>
                                                 </NavLink>
                                                 <p className="twm-job-address">1385 Sunset Blvd Los Angeles, CA 90026, USA</p>
-                                                <NavLink to={publicUser.employer.DETAIL1} className="twm-job-websites site-text-primary">Digital &amp; Creative</NavLink>
+                                                <NavLink to={publicUser.employer.DETAIL2} className="twm-job-websites site-text-primary">Digital &amp; Creative</NavLink>
                                             </div>
                                             <div className="twm-right-content">
                                                 <div className="twm-jobs-vacancies"><span>38</span>Vacancies</div>
@@ -109,11 +109,11 @@ function EmployersGridPage() {
                                                 <JobZImage src="images/jobs-company/pic5.jpg" alt="#" />
                                             </div>
                                             <div className="twm-mid-content">
-                                                <NavLink to={publicUser.employer.DETAIL1} className="twm-job-title">
+                                                <NavLink to={publicUser.employer.DETAIL2} className="twm-job-title">
                                                     <h4 className="twm-job-title">Robo Tech</h4>
                                                 </NavLink>
                                                 <p className="twm-job-address">1385 Sunset Blvd Los Angeles, CA 90026, USA</p>
-                                                <NavLink to={publicUser.employer.DETAIL1} className="twm-job-websites site-text-primary">Sales &amp; Marketing</NavLink>
+                                                <NavLink to={publicUser.employer.DETAIL2} className="twm-job-websites site-text-primary">Sales &amp; Marketing</NavLink>
                                             </div>
                                             <div className="twm-right-content">
                                                 <div className="twm-jobs-vacancies"><span>40</span>Vacancies</div>
@@ -126,11 +126,11 @@ function EmployersGridPage() {
                                                 <JobZImage src="images/jobs-company/pic1.jpg" alt="#" />
                                             </div>
                                             <div className="twm-mid-content">
-                                                <NavLink to={publicUser.employer.DETAIL1} className="twm-job-title">
+                                                <NavLink to={publicUser.employer.DETAIL2} className="twm-job-title">
                                                     <h4>Galaxy IT Solution</h4>
                                                 </NavLink>
                                                 <p className="twm-job-address">1385 Sunset Blvd Los Angeles, CA 90026, USA</p>
-                                                <NavLink to={publicUser.employer.DETAIL1} className="twm-job-websites site-text-primary">Leisure &amp; Tourismm</NavLink>
+                                                <NavLink to={publicUser.employer.DETAIL2} className="twm-job-websites site-text-primary">Leisure &amp; Tourismm</NavLink>
                                             </div>
                                             <div className="twm-right-content">
                                                 <div className="twm-jobs-vacancies"><span>38</span>Vacancies</div>
@@ -143,11 +143,11 @@ function EmployersGridPage() {
                                                 <JobZImage src="images/jobs-company/pic2.jpg" alt="#" />
                                             </div>
                                             <div className="twm-mid-content">
-                                                <NavLink to={publicUser.employer.DETAIL1} className="twm-job-title">
+                                                <NavLink to={publicUser.employer.DETAIL2} className="twm-job-title">
                                                     <h4>Coderbotics solutions</h4>
                                                 </NavLink>
                                                 <p className="twm-job-address">1385 Sunset Blvd Los Angeles, CA 90026, USA</p>
-                                                <NavLink to={publicUser.employer.DETAIL1} className="twm-job-websites site-text-primary">Consultancy</NavLink>
+                                                <NavLink to={publicUser.employer.DETAIL2} className="twm-job-websites site-text-primary">Consultancy</NavLink>
                                             </div>
                                             <div className="twm-right-content">
                                                 <div className="twm-jobs-vacancies"><span>35</span>Vacancies</div>
@@ -160,11 +160,11 @@ function EmployersGridPage() {
                                                 <JobZImage src="images/jobs-company/pic3.jpg" alt="#" />
                                             </div>
                                             <div className="twm-mid-content">
-                                                <NavLink to={publicUser.employer.DETAIL1} className="twm-job-title">
+                                                <NavLink to={publicUser.employer.DETAIL2} className="twm-job-title">
                                                     <h4 className="twm-job-title">Microsoft solution</h4>
                                                 </NavLink>
                                                 <p className="twm-job-address">1385 Sunset Blvd Los Angeles, CA 90026, USA</p>
-                                                <NavLink to={publicUser.employer.DETAIL1} className="twm-job-websites site-text-primary">Technologies</NavLink>
+                                                <NavLink to={publicUser.employer.DETAIL2} className="twm-job-websites site-text-primary">Technologies</NavLink>
                                             </div>
                                             <div className="twm-right-content">
                                                 <div className="twm-jobs-vacancies"><span>65</span>Vacancies</div>
@@ -177,11 +177,11 @@ function EmployersGridPage() {
                                                 <JobZImage src="images/jobs-company/pic4.jpg" alt="#" />
                                             </div>
                                             <div className="twm-mid-content">
-                                                <NavLink to={publicUser.employer.DETAIL1} className="twm-job-title">
+                                                <NavLink to={publicUser.employer.DETAIL2} className="twm-job-title">
                                                     <h4 className="twm-job-title">Dot Circle PVT Ltd</h4>
                                                 </NavLink>
                                                 <p className="twm-job-address">1385 Sunset Blvd Los Angeles, CA 90026, USA</p>
-                                                <NavLink to={publicUser.employer.DETAIL1} className="twm-job-websites site-text-primary">Sales &amp; Marketing</NavLink>
+                                                <NavLink to={publicUser.employer.DETAIL2} className="twm-job-websites site-text-primary">Sales &amp; Marketing</NavLink>
                                             </div>
                                             <div className="twm-right-content">
                                                 <div className="twm-jobs-vacancies"><span>50</span>Vacancies</div>

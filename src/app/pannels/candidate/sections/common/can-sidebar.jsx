@@ -48,11 +48,11 @@ function CanSidebarSection() {
                             Saved Jobs
                         </NavLink>
                     </li>
-                    <li className={setMenuActive(currentpath, canRoute(candidate.CV_MANAGER))}>
+                    {/* <li className={setMenuActive(currentpath, canRoute(candidate.CV_MANAGER))}>
                         <NavLink to={canRoute(candidate.CV_MANAGER)}><i className="fa fa-paperclip" />
                             CV Manager
                         </NavLink>
-                    </li>
+                    </li> */}
                     <li className={setMenuActive(currentpath, canRoute(candidate.ALERTS))}>
                         <NavLink to={canRoute(candidate.ALERTS)}><i className="fa fa-bell" />
                             Job Alerts
