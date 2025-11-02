@@ -48,12 +48,12 @@ function Footer1() {
                                 <div className="row">
                                     <div className="col-lg-3 col-md-6 col-sm-6">
                                         <div className="widget widget_services ftr-list-center">
-                                            <h3 className="widget-title">For Candidate</h3>
+                                            <h3 className="widget-title">For Candidates</h3>
                                             <ul>
-                                                <li><NavLink to={publicUser.pages.LOGIN}>User Dashboard</NavLink></li>
-                                                <li><NavLink to={publicUser.candidate.GRID}>Candidates</NavLink></li>
-                                                <li><NavLink to={publicUser.blog.LIST}>Blog List</NavLink></li>
-                                                <li><NavLink to={publicUser.blog.DETAIL}>Blog single</NavLink></li>
+                                                <li><NavLink to={publicUser.pages.LOGIN}>Candidate Login</NavLink></li>
+                                                {/* <li><NavLink to={publicUser.candidate.GRID}>Candidates</NavLink></li> */}
+                                                <li><NavLink to={publicUser.blog.GRID2}>Blog List</NavLink></li>
+                                                {/* <li><NavLink to={publicUser.blog.DETAIL}>Blog single</NavLink></li> */}
                                             </ul>
                                         </div>
                                     </div>
@@ -61,10 +61,9 @@ function Footer1() {
                                         <div className="widget widget_services ftr-list-center">
                                             <h3 className="widget-title">For Employers</h3>
                                             <ul>
-                                                <li><NavLink to={publicUser.blog.GRID1}>Blog Grid</NavLink></li>
-                                                <li><NavLink to={publicUser.pages.CONTACT}>Contact</NavLink></li>
-                                                <li><NavLink to={publicUser.jobs.LIST}>Jobs Listing</NavLink></li>
-                                                <li><NavLink to={publicUser.jobs.DETAIL1}>Jobs details</NavLink></li>
+                                                <li><NavLink to={publicUser.pages.LOGIN}>Employee Login</NavLink></li>
+                                                <li><NavLink to={publicUser.jobs.GRID}>Jobs Listings</NavLink></li>
+                                                {/* <li><NavLink to={publicUser.jobs.DETAIL1}>Jobs details</NavLink></li> */}
                                             </ul>
                                         </div>
                                     </div>
@@ -73,7 +72,7 @@ function Footer1() {
                                             <h3 className="widget-title">Helpful Resources</h3>
                                             <ul>
                                                 <li><NavLink to={publicUser.pages.FAQ}>FAQs</NavLink></li>
-                                                <li><NavLink to={publicUser.pages.LOGIN}>Profile</NavLink></li>
+                                                {/* <li><NavLink to={publicUser.pages.LOGIN}>Profile</NavLink></li> */}
                                                 <li><NavLink to={publicUser.pages.ERROR404}>404 Page</NavLink></li>
                                                 <li><NavLink to={publicUser.pages.PRICING}>Pricing</NavLink></li>
                                             </ul>
@@ -86,7 +85,9 @@ function Footer1() {
                                                 <li><NavLink to={publicUser.HOME1}>Home</NavLink></li>
                                                 <li><NavLink to={publicUser.pages.ABOUT}>About us</NavLink></li>
                                                 <li><NavLink to={publicUser.jobs.GRID}>Jobs</NavLink></li>
-                                                <li><NavLink to={publicUser.employer.LIST}>Employer</NavLink></li>
+                                                <li><NavLink to={publicUser.pages.CONTACT}>Contact Us</NavLink></li>
+
+                                                {/* <li><NavLink to={publicUser.employer.LIST}>Employer</NavLink></li> */}
                                             </ul>
                                         </div>
                                     </div>
@@ -98,7 +99,7 @@ function Footer1() {
                     <div className="footer-bottom">
                         <div className="footer-bottom-info">
                             <div className="footer-copy-right">
-                                <span className="copyrights-text">Copyright © 2023 by thewebmax All Rights Reserved.</span>
+                                <span className="copyrights-text">Copyright © 2025 by Rarenett All Rights Reserved.</span>
                             </div>
                             <ul className="social-icons">
                                 <li><a href="https://www.facebook.com/" className="fab fa-facebook-f" /></li>

@@ -5,11 +5,11 @@ export const banner = {
         jobs: {
             grid: {
                 title: "The Most Exciting Jobs",
-                crumb: "Jobs Grid"
+                crumb: "Jobs Listings"
             },
             list: {
                 title: "The Most Exciting Jobs",
-                crumb: "Jobs List"
+                crumb: "Jobs Listings"
             },
             detail1: {
                 title: "IT Department Manager",
@@ -22,8 +22,8 @@ export const banner = {
         },
         employer: {
             grid: {
-                title: "Employers Grid",
-                crumb: "Employers Grid"
+                title: "Company Details",
+                crumb: "List of Verified Companies"
             },
             list: {
                 title: "Employers List",
@@ -36,16 +36,16 @@ export const banner = {
         },
         candidate: {
             grid: {
-                title: "Candidate Grid",
+                title: "Candidate Listings",
                 crumb: "Candidate Grid"
             },
             list: {
-                title: "Candidate List",
-                crumb: "Candidate List"
+                title: "Candidate Listings",
+                crumb: "List Of Verified Candidates"
             },
             detail1: {
-                title: "Candidate Detail",
-                crumb: "Candidate Detail"
+                title: "Candidate Details",
+                crumb: "Candidate Details"
             }
         },
         pages: {
@@ -76,8 +76,8 @@ export const banner = {
                 crumb: "Blog"
             },
             grid2: {
-                title: "Blog Grid",
-                crumb: "Blog Grid"
+                title: "Blogs",
+                crumb: "Blogs"
             },
             grid3: {
                 title: "Blog Grid 2",
