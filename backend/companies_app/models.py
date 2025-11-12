@@ -1,6 +1,10 @@
 from django.db import models
 from users_app.models import CustomUser
 
+from django.db import models
+from users_app.models import CustomUser
+
+
 class CompanyProfile(models.Model):
     """Profile for employers/companies"""
     user = models.OneToOneField(
@@ -31,6 +35,13 @@ class CompanyProfile(models.Model):
     linkedin = models.URLField(blank=True, null=True)
     instagram = models.URLField(blank=True, null=True)
     youtube = models.URLField(blank=True, null=True)
+    whatsapp = models.URLField(blank=True, null=True)  # Added
+    pinterest = models.URLField(blank=True, null=True)  # Added
+    tumblr = models.URLField(blank=True, null=True)  # Added
+
+    # Video Links
+    youtube_links = models.JSONField(default=list, blank=True, null=True)  # Added
+    vimeo_links = models.JSONField(default=list, blank=True, null=True)  # Added
 
     # Status
     is_active = models.BooleanField(default=True)

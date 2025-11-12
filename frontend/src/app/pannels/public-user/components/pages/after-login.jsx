@@ -2,69 +2,130 @@ import { NavLink, useNavigate } from "react-router-dom";
 import JobZImage from "../../../../common/jobz-img";
 import { canRoute, candidate, empRoute, employer, publicUser } from "../../../../../globals/route-names";
 import { useState } from "react";
-import processLogin from "../../../../form-processing/login";
-import { formType } from "../../../../../globals/constants";
+import axios from "axios";
+import { useAuth } from "../../../../../contexts/AuthContext";
+import { GoogleLogin } from '@react-oauth/google';
+
+const API_URL = "http://localhost:8000/api";
 
 function AfterLoginPage() {
-
     const navigate = useNavigate();
-    const [canusername, setCanUsername] = useState('guest');
-    const [empusername, setEmpUsername] = useState('admin');
-    const [password, setPassword] = useState('12345');
+    const { login } = useAuth();
+    
+    // Candidate state
+    const [canEmail, setCanEmail] = useState('');
+    const [canPassword, setCanPassword] = useState('');
+    const [canError, setCanError] = useState('');
+    
+    // Employer state
+    const [empEmail, setEmpEmail] = useState('');
+    const [empPassword, setEmpPassword] = useState('');
+    const [empError, setEmpError] = useState('');
+    
+    const [loading, setLoading] = useState(false);
+    const [activeTab, setActiveTab] = useState('candidate');
 
-    const handleCandidateLogin = (event) => {
+    // Handle Candidate Login
+    const handleCandidateLogin = async (event) => {
         event.preventDefault();
-        loginCandidate();
-    }
+        setCanError('');
+        setLoading(true);
 
-    const handleEmployerLogin = (event) => {
+        try {
+            const response = await axios.post(`${API_URL}/login/`, {
+                email: canEmail,
+                password: canPassword
+            });
+
+            if (response.data.user.user_type === 'candidate') {
+                login(response.data.access, response.data.refresh, response.data.user);
+                navigate(canRoute(candidate.DASHBOARD));
+            } else {
+                setCanError('This account is not a candidate account');
+            }
+        } catch (error) {
+            if (error.response) {
+                setCanError(error.response.data.non_field_errors?.[0] || 'Invalid email or password');
+            } else {
+                setCanError('Network error. Please try again.');
+            }
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    // Handle Employer Login
+    const handleEmployerLogin = async (event) => {
         event.preventDefault();
-        loginEmployer();
-    }
+        setEmpError('');
+        setLoading(true);
 
-    const loginCandidate = () => {
-        processLogin(
-            {
-                type: formType.LOGIN_CANDIDATE,
-                username: canusername,
-                password: password
-            },
-            (valid) => {
-                if (valid) {
-                    moveToCandidate();
+        try {
+            const response = await axios.post(`${API_URL}/login/`, {
+                email: empEmail,
+                password: empPassword
+            });
+
+            if (response.data.user.user_type === 'employer') {
+                login(response.data.access, response.data.refresh, response.data.user);
+                navigate(empRoute(employer.DASHBOARD));
+            } else {
+                setEmpError('This account is not an employer account');
+            }
+        } catch (error) {
+            if (error.response) {
+                setEmpError(error.response.data.non_field_errors?.[0] || 'Invalid email or password');
+            } else {
+                setEmpError('Network error. Please try again.');
+            }
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    // Handle Google Login
+    const handleGoogleSuccess = async (credentialResponse) => {
+        try {
+            setLoading(true);
+            
+            const response = await axios.post(`${API_URL}/google-login/`, {
+                credential: credentialResponse.credential
+            });
+
+            const userType = response.data.user.user_type;
+            
+            if (activeTab === 'candidate' && userType === 'candidate') {
+                login(response.data.access, response.data.refresh, response.data.user);
+                navigate(canRoute(candidate.DASHBOARD));
+            } else if (activeTab === 'employer' && userType === 'employer') {
+                login(response.data.access, response.data.refresh, response.data.user);
+                navigate(empRoute(employer.DASHBOARD));
+            } else {
+                if (activeTab === 'candidate') {
+                    setCanError('This Google account is not registered as a candidate');
                 } else {
-                    // show error
-                    console.log('error');
+                    setEmpError('This Google account is not registered as an employer');
                 }
             }
-        );
-    }
-
-    const loginEmployer = () => {
-        processLogin(
-            {
-                type: formType.LOGIN_EMPLOYER,
-                username: empusername,
-                password: password
-            },
-            (valid) => {
-                if (valid) {
-                    moveToEmployer();
-                } else {
-                    // show error
-                    console.log('error');
-                }
+        } catch (error) {
+            console.error('Google login error:', error);
+            if (activeTab === 'candidate') {
+                setCanError('Google login failed. Please try again.');
+            } else {
+                setEmpError('Google login failed. Please try again.');
             }
-        );
-    }
+        } finally {
+            setLoading(false);
+        }
+    };
 
-    const moveToCandidate = () => {
-        navigate(canRoute(candidate.DASHBOARD));
-    }
-
-    const moveToEmployer = () => {
-        navigate(empRoute(employer.DASHBOARD));
-    }
+    const handleGoogleError = () => {
+        if (activeTab === 'candidate') {
+            setCanError('Google login failed');
+        } else {
+            setEmpError('Google login failed');
+        }
+    };
 
     return (
         <>
@@ -93,30 +154,51 @@ function AfterLoginPage() {
                                     </div>
                                     <div className="twm-tabs-style-2">
                                         <ul className="nav nav-tabs" id="myTab2" role="tablist">
-                                            {/*Login Candidate*/}
                                             <li className="nav-item">
-                                                <button className="nav-link active" data-bs-toggle="tab" data-bs-target="#twm-login-candidate" type="button"><i className="fas fa-user-tie" />Candidate</button>
+                                                <button 
+                                                    className="nav-link active" 
+                                                    data-bs-toggle="tab" 
+                                                    data-bs-target="#twm-login-candidate" 
+                                                    type="button"
+                                                    onClick={() => setActiveTab('candidate')}
+                                                >
+                                                    <i className="fas fa-user-tie" />Candidate
+                                                </button>
                                             </li>
-                                            {/*Login Employer*/}
                                             <li className="nav-item">
-                                                <button className="nav-link" data-bs-toggle="tab" data-bs-target="#twm-login-Employer" type="button"><i className="fas fa-building" />Employer</button>
+                                                <button 
+                                                    className="nav-link" 
+                                                    data-bs-toggle="tab" 
+                                                    data-bs-target="#twm-login-Employer" 
+                                                    type="button"
+                                                    onClick={() => setActiveTab('employer')}
+                                                >
+                                                    <i className="fas fa-building" />Employer
+                                                </button>
                                             </li>
                                         </ul>
                                         <div className="tab-content" id="myTab2Content">
                                             {/*Login Candidate Content*/}
                                             <form onSubmit={handleCandidateLogin} className="tab-pane fade show active" id="twm-login-candidate">
                                                 <div className="row">
+                                                    {canError && (
+                                                        <div className="col-lg-12">
+                                                            <div className="alert alert-danger" role="alert">
+                                                                {canError}
+                                                            </div>
+                                                        </div>
+                                                    )}
                                                     <div className="col-lg-12">
                                                         <div className="form-group mb-3">
-                                                            <input name="username"
-                                                                type="text"
+                                                            <input 
+                                                                name="email"
+                                                                type="email"
                                                                 required
                                                                 className="form-control"
-                                                                placeholder="Usearname*"
-                                                                value={canusername}
-                                                                onChange={(event) => {
-                                                                    setCanUsername(event.target.value);
-                                                                }} />
+                                                                placeholder="Email*"
+                                                                value={canEmail}
+                                                                onChange={(event) => setCanEmail(event.target.value)}
+                                                            />
                                                         </div>
                                                     </div>
                                                     <div className="col-lg-12">
@@ -127,25 +209,28 @@ function AfterLoginPage() {
                                                                 className="form-control"
                                                                 required
                                                                 placeholder="Password*"
-                                                                value={password}
-                                                                onChange={(event) => {
-                                                                    setPassword(event.target.value);
-                                                                }} />
+                                                                value={canPassword}
+                                                                onChange={(event) => setCanPassword(event.target.value)}
+                                                            />
                                                         </div>
                                                     </div>
                                                     <div className="col-lg-12">
                                                         <div className="twm-forgot-wrap">
                                                             <div className="form-group mb-3">
                                                                 <div className="form-check">
-                                                                    <input type="checkbox" className="form-check-input" id="Password4" />
-                                                                    <label className="form-check-label rem-forgot" htmlFor="Password4">Remember me <a href="#" className="site-text-primary">Forgot Password</a></label>
+                                                                    <input type="checkbox" className="form-check-input" id="rememberCan" />
+                                                                    <label className="form-check-label rem-forgot" htmlFor="rememberCan">
+                                                                        Remember me <a href="#" className="site-text-primary">Forgot Password</a>
+                                                                    </label>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div className="col-md-12">
                                                         <div className="form-group">
-                                                            <button type="submit" className="site-button">Log in</button>
+                                                            <button type="submit" className="site-button" disabled={loading}>
+                                                                {loading ? 'Logging in...' : 'Log in'}
+                                                            </button>
                                                         </div>
                                                     </div>
                                                     <div className="col-md-12">
@@ -154,19 +239,14 @@ function AfterLoginPage() {
                                                         </div>
                                                     </div>
                                                     <div className="col-md-12">
-                                                        <div className="form-group">
-                                                            <button type="submit" className="log_with_facebook">
-                                                                <i className="fab fa-facebook" />
-                                                                Continue with Facebook
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                    <div className="col-md-12">
-                                                        <div className="form-group">
-                                                            <button type="submit" className="log_with_google">
-                                                                <JobZImage src="images/google-icon.png" alt="" />
-                                                                Continue with Google
-                                                            </button>
+                                                        <div className="form-group" style={{ display: 'flex', justifyContent: 'center' }}>
+                                                            <GoogleLogin
+                                                                onSuccess={handleGoogleSuccess}
+                                                                onError={handleGoogleError}
+                                                                theme="outline"
+                                                                size="large"
+                                                                text="continue_with"
+                                                            />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -174,18 +254,24 @@ function AfterLoginPage() {
                                             {/*Login Employer Content*/}
                                             <form onSubmit={handleEmployerLogin} className="tab-pane fade" id="twm-login-Employer">
                                                 <div className="row">
+                                                    {empError && (
+                                                        <div className="col-lg-12">
+                                                            <div className="alert alert-danger" role="alert">
+                                                                {empError}
+                                                            </div>
+                                                        </div>
+                                                    )}
                                                     <div className="col-lg-12">
                                                         <div className="form-group mb-3">
                                                             <input
-                                                                name="username"
-                                                                type="text"
+                                                                name="email"
+                                                                type="email"
                                                                 required
                                                                 className="form-control"
-                                                                placeholder="Usearname*"
-                                                                value={empusername}
-                                                                onChange={(event) => {
-                                                                    setEmpUsername(event.target.value);
-                                                                }} />
+                                                                placeholder="Email*"
+                                                                value={empEmail}
+                                                                onChange={(event) => setEmpEmail(event.target.value)}
+                                                            />
                                                         </div>
                                                     </div>
                                                     <div className="col-lg-12">
@@ -196,25 +282,28 @@ function AfterLoginPage() {
                                                                 className="form-control"
                                                                 required
                                                                 placeholder="Password*"
-                                                                value={password}
-                                                                onChange={(event) => {
-                                                                    setPassword(event.target.value);
-                                                                }} />
+                                                                value={empPassword}
+                                                                onChange={(event) => setEmpPassword(event.target.value)}
+                                                            />
                                                         </div>
                                                     </div>
                                                     <div className="col-lg-12">
                                                         <div className="twm-forgot-wrap">
                                                             <div className="form-group mb-3">
                                                                 <div className="form-check">
-                                                                    <input type="checkbox" className="form-check-input" id="Password4" />
-                                                                    <label className="form-check-label rem-forgot" htmlFor="Password4">Remember me <a href="#" className="site-text-primary">Forgot Password</a></label>
+                                                                    <input type="checkbox" className="form-check-input" id="rememberEmp" />
+                                                                    <label className="form-check-label rem-forgot" htmlFor="rememberEmp">
+                                                                        Remember me <a href="#" className="site-text-primary">Forgot Password</a>
+                                                                    </label>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div className="col-md-12">
                                                         <div className="form-group">
-                                                            <button type="submit" className="site-button">Log in</button>
+                                                            <button type="submit" className="site-button" disabled={loading}>
+                                                                {loading ? 'Logging in...' : 'Log in'}
+                                                            </button>
                                                         </div>
                                                     </div>
                                                     <div className="col-md-12">
@@ -223,19 +312,14 @@ function AfterLoginPage() {
                                                         </div>
                                                     </div>
                                                     <div className="col-md-12">
-                                                        <div className="form-group">
-                                                            <button type="submit" className="log_with_facebook">
-                                                                <i className="fab fa-facebook" />
-                                                                Continue with Facebook
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                    <div className="col-md-12">
-                                                        <div className="form-group">
-                                                            <button type="submit" className="log_with_google">
-                                                                <JobZImage src="images/google-icon.png" alt="" />
-                                                                Continue with Google
-                                                            </button>
+                                                        <div className="form-group" style={{ display: 'flex', justifyContent: 'center' }}>
+                                                            <GoogleLogin
+                                                                onSuccess={handleGoogleSuccess}
+                                                                onError={handleGoogleError}
+                                                                theme="outline"
+                                                                size="large"
+                                                                text="continue_with"
+                                                            />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -249,7 +333,7 @@ function AfterLoginPage() {
                 </div>
             </div>
         </>
-    )
+    );
 }
 
 export default AfterLoginPage;

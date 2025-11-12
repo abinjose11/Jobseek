@@ -1,4 +1,6 @@
 const baseUrl = process.env.PUBLIC_URL
+const MEDIA_URL = "http://localhost:8000";
+
 export const default_skin = "6"
 
 export const popupType = {

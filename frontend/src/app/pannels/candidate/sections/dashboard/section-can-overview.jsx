@@ -1,11 +1,11 @@
 import CountUp from "react-countup";
 
-function SectionCandidateOverview() {
+function SectionCandidateOverview({ profile, loading, userName }) {
     return (
         <>
-            <div className="wt-admin-right-page-header">
-                <h2>Randall Henderson</h2>
-                <p>IT Contractor</p>
+            <div className="wt-admin-right-page-header clearfix">
+                <h2>Hello, {loading ? 'Loading...' : userName}</h2>
+                <div className="breadcrumbs"><a href="#">Home</a><span>Dashboard</span></div>
             </div>
             <div className="twm-dash-b-blocks mb-5">
                 <div className="row">

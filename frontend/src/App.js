@@ -3,7 +3,7 @@ import Loader from "./app/common/loader";
 import ScrollToTop from "./globals/scroll-to-top";
 import { useState } from "react";
 import { AuthProvider } from './contexts/AuthContext';
-
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 function App() {
 

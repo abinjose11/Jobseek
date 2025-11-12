@@ -1,13 +1,42 @@
 import JobZImage from "../../../common/jobz-img";
 import CountUp from "react-countup";
 import SectionCandidateProfileViews from "../../candidate/sections/dashboard/section-can-profile-views";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { useAuth } from "../../../../contexts/AuthContext";
+
+const API_URL = "http://localhost:8000/api";
 
 function EmpDashboardPage() {
+    const { user } = useAuth();
+    const [profile, setProfile] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        fetchProfile();
+    }, []);
+
+    const fetchProfile = async () => {
+        try {
+            const token = localStorage.getItem('access_token');
+            const response = await axios.get(`${API_URL}/profile/`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            setProfile(response.data.profile);
+        } catch (error) {
+            console.error('Error fetching profile:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <>
             <div className="wt-admin-right-page-header clearfix">
-                <h2>Hello, Nikola Tesla</h2>
-                <div className="breadcrumbs"><a href="#">Home</a><span>Dasboard</span></div>
+                <h2>Hello, {loading ? 'Loading...' : (profile?.name || user?.username || 'User')}</h2>
+                <div className="breadcrumbs"><a href="#">Home</a><span>Dashboard</span></div>
             </div>
             <div className="twm-dash-b-blocks mb-5">
                 <div className="row">
@@ -76,9 +105,7 @@ function EmpDashboardPage() {
             <div className="twm-pro-view-chart-wrap">
                 <div className="row">
                     <div className="col-xl-6 col-lg-12 col-md-12 mb-4">
-
                         <SectionCandidateProfileViews />
-
                     </div>
                     <div className="col-xl-6 col-lg-12 col-md-12 mb-4">
                         <div className="panel panel-default">
@@ -380,11 +407,6 @@ function EmpDashboardPage() {
                                                                     </button>
                                                                 </li>
                                                                 <li>
-                                                                    <button title="Send message" data-bs-toggle="tooltip" data-bs-placement="top">
-                                                                        <span className="far fa-envelope-open" />
-                                                                    </button>
-                                                                </li>
-                                                                <li>
                                                                     <button title="Delete" data-bs-toggle="tooltip" data-bs-placement="top">
                                                                         <span className="far fa-trash-alt" />
                                                                     </button>
@@ -403,7 +425,7 @@ function EmpDashboardPage() {
                 </div>
             </div>
         </>
-    )
+    );
 }
 
 export default EmpDashboardPage;

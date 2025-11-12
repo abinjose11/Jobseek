@@ -1,15 +1,45 @@
 import JobZImage from "../../../common/jobz-img";
-import { NavLink } from "react-router-dom";
-import { empRoute, employer } from "../../../../globals/route-names";
+import { NavLink, useNavigate } from "react-router-dom";
+import { empRoute, employer, publicUser } from "../../../../globals/route-names";
+import { useAuth } from "../../../../contexts/AuthContext";
+import { useState, useEffect } from "react";
+import axios from "axios";
+
+const API_URL = "http://localhost:8000/api";
 
 function EmpHeaderSection(props) {
+    const { user, logout } = useAuth();
+    const navigate = useNavigate();
+    const [profile, setProfile] = useState(null);
+
+    useEffect(() => {
+        fetchProfile();
+    }, []);
+
+    const fetchProfile = async () => {
+        try {
+            const token = localStorage.getItem('access_token');
+            const response = await axios.get(`${API_URL}/profile/`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            setProfile(response.data.profile);
+        } catch (error) {
+            console.error('Error fetching profile:', error);
+        }
+    };
+
+    const handleLogout = () => {
+        logout();
+        navigate(publicUser.HOME1);
+    };
+
     return (
         <>
             <header id="header-admin-wrap" className="header-admin-fixed">
-                {/* Header Start */}
                 <div id="header-admin" className={props.sidebarActive ? "" : "active"}>
                     <div className="container">
-                        {/* Left Side Content */}
                         <div className="header-left">
                             <div className="nav-btn-wrap">
                                 <a className="nav-btn-admin" id="sidebarCollapse" onClick={props.onClick}>
@@ -17,8 +47,6 @@ function EmpHeaderSection(props) {
                                 </a>
                             </div>
                         </div>
-                        {/* Left Side Content End */}
-                        {/* Right Side Content */}
                         <div className="header-right">
                             <ul className="header-widget-wrap">
                                 {/*Message*/}
@@ -145,7 +173,8 @@ function EmpHeaderSection(props) {
                                                     <div className="user-name text-black">
                                                         <span>
                                                             <JobZImage src="images/user-avtar/pic4.jpg" alt="" />
-                                                        </span>Nikola Tesla
+                                                        </span>
+                                                        {profile?.name || user?.username || 'User'}
                                                     </div>
                                                 </a>
                                                 <div className="dropdown-menu" aria-labelledby="ID-ACCOUNT_dropdown">
@@ -153,7 +182,11 @@ function EmpHeaderSection(props) {
                                                         <li><NavLink to={empRoute(employer.DASHBOARD)}><i className="fa fa-home" />Dashboard</NavLink></li>
                                                         <li><NavLink to={empRoute(employer.MESSAGES1)}><i className="fa fa-envelope" /> Messages</NavLink></li>
                                                         <li><NavLink to={empRoute(employer.PROFILE)}><i className="fa fa-user" /> Profile</NavLink></li>
-                                                        <li><a href="#" data-bs-toggle="modal" data-bs-target="#logout-dash-profile"><i className="fa fa-share-square" /> Logout</a></li>
+                                                        <li>
+                                                            <a href="#" onClick={(e) => { e.preventDefault(); handleLogout(); }}>
+                                                                <i className="fa fa-share-square" /> Logout
+                                                            </a>
+                                                        </li>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -162,14 +195,11 @@ function EmpHeaderSection(props) {
                                 </li>
                             </ul>
                         </div>
-                        {/* Right Side Content End */}
                     </div>
                 </div>
-                {/* Header End */}
             </header>
-
         </>
-    )
+    );
 }
 
 export default EmpHeaderSection;

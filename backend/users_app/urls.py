@@ -9,7 +9,7 @@ router.register(r'login', LoginViewSet, basename='login')
 
 urlpatterns = [
     path('api/google-login/', google_login, name='google_login'),
-    path('profile/', profile_view, name='profile'),
+    path('api/profile/', profile_view, name='profile'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/', include(router.urls)),  # ✅ All API endpoints under /api/
 

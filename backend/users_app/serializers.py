@@ -58,20 +58,18 @@ class LoginSerializer(serializers.Serializer):
         email = data.get('email')
         password = data.get('password')
         
-        # Find user by email
-        try:
-            user_obj = CustomUser.objects.get(email=email)
-        except CustomUser.DoesNotExist:
-            raise serializers.ValidationError("Invalid email or password")
-        
-        # Authenticate using username (Django's default)
-        user = authenticate(username=user_obj.username, password=password)
+        # Since USERNAME_FIELD = 'email', authenticate with email directly
+        user = authenticate(request=self.context.get('request'), 
+                          username=email,  # Django uses 'username' parameter even when USERNAME_FIELD is email
+                          password=password)
         
         if not user:
-            raise serializers.ValidationError("Invalid email or password")
+            raise serializers.ValidationError({"non_field_errors": ["Invalid email or password"]})
+        
+        if not user.is_active:
+            raise serializers.ValidationError({"non_field_errors": ["Account is disabled"]})
         
         return user
-
 
 # -------------------------
 # Candidate Profile Serializer
