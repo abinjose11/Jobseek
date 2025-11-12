@@ -11,7 +11,7 @@ class CompanyPhotoSerializer(serializers.ModelSerializer):
 class CompanyBasicInfoSerializer(serializers.ModelSerializer):
     class Meta:
         model = CompanyProfile
-        fields = ['name', 'phone', 'website', 'established_since', 'team_size', 'description']
+        fields = ['name', 'phone', 'website', 'established_since', 'team_size', 'location', 'description']  # ✅ Added 'location'
 
 
 class CompanyLogoSerializer(serializers.ModelSerializer):

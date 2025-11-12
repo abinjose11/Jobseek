@@ -6,26 +6,28 @@ import axios from "axios";
 import { useAuth } from "../../../../contexts/AuthContext";
 
 const API_URL = "http://localhost:8000/api";
-  const IMG_BASE_URL="http://localhost:8000"
-    const getImageUrl = (imageUrl) => {
-        if (!imageUrl) return 'assets/images/thumbs/default-material.png';
-        if (imageUrl.startsWith('http')) return imageUrl;
-        if (imageUrl.startsWith('/')) return `${IMG_BASE_URL}${imageUrl}`;
-        return `${IMG_BASE_URL}${imageUrl}`;
-    };
+const IMG_BASE_URL = "http://localhost:8000";
+
+const getImageUrl = (imageUrl) => {
+    if (!imageUrl) return 'images/jobs-company/pic1.jpg';
+    if (imageUrl.startsWith('http')) return imageUrl;
+    if (imageUrl.startsWith('/')) return `${IMG_BASE_URL}${imageUrl}`;
+    return `${IMG_BASE_URL}/${imageUrl}`;
+};
 
 function EmpCompanyProfilePage() {
     const { user } = useAuth();
     const [profile, setProfile] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    // Basic Info State
+    // Basic Info State (Added location)
     const [basicInfo, setBasicInfo] = useState({
         name: '',
         phone: '',
         website: '',
         established_since: '',
         team_size: '',
+        location: '',  // NEW FIELD
         description: ''
     });
 
@@ -62,6 +64,10 @@ function EmpCompanyProfilePage() {
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
 
+    // Image Viewer State
+    const [viewImage, setViewImage] = useState(null);
+    const [showImageModal, setShowImageModal] = useState(false);
+
     useEffect(() => {
         loadScript("js/custom.js");
         fetchProfile();
@@ -73,10 +79,10 @@ function EmpCompanyProfilePage() {
             const response = await axios.get(`${API_URL}/profile/`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
-            
+
             const profileData = response.data.profile;
             setProfile(profileData);
-            
+
             // Set Basic Info
             setBasicInfo({
                 name: profileData.name || '',
@@ -84,6 +90,7 @@ function EmpCompanyProfilePage() {
                 website: profileData.website || '',
                 established_since: profileData.established_since || '',
                 team_size: profileData.team_size || '',
+                location: profileData.location || '',  // NEW FIELD
                 description: profileData.description || ''
             });
 
@@ -116,6 +123,38 @@ function EmpCompanyProfilePage() {
         }
     };
 
+    // Handle viewing image
+    const handleViewImage = (imageUrl) => {
+        setViewImage(imageUrl);
+        setShowImageModal(true);
+    };
+
+    // Handle closing modal
+    const handleCloseModal = () => {
+        setShowImageModal(false);
+        setViewImage(null);
+    };
+
+    // Handle delete photo
+    const handleDeletePhoto = async (photoId) => {
+        if (!window.confirm('Are you sure you want to delete this photo?')) {
+            return;
+        }
+
+        try {
+            const token = localStorage.getItem('access_token');
+            await axios.delete(`${API_URL}/photos/${photoId}/`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            alert('✅ Photo deleted successfully!');
+            fetchProfile();
+        } catch (error) {
+            alert('❌ Failed to delete photo');
+            console.error(error);
+        }
+    };
+
+    // ... (Keep all your existing handler functions: handleBasicInfoChange, handleSocialChange, etc.)
     // Handle Basic Info Change
     const handleBasicInfoChange = (e) => {
         setBasicInfo({ ...basicInfo, [e.target.name]: e.target.value });
@@ -156,7 +195,7 @@ function EmpCompanyProfilePage() {
         setVimeoLinks(vimeoLinks.filter((_, i) => i !== index));
     };
 
-    // Save Basic Information
+    // Save Basic Information (Updated to include location)
     const handleSaveBasicInfo = async (e) => {
         e.preventDefault();
         setSavingBasicInfo(true);
@@ -168,7 +207,7 @@ function EmpCompanyProfilePage() {
             const response = await axios.put(
                 `${API_URL}/profiles/update-basic-info/`,
                 basicInfo,
-                { headers: { 'Authorization': `Bearer ${token}` }}
+                { headers: { 'Authorization': `Bearer ${token}` } }
             );
             setMessage('✅ Basic information updated successfully!');
             alert('✅ SUCCESS: Basic information has been updated successfully!');
@@ -183,11 +222,11 @@ function EmpCompanyProfilePage() {
         }
     };
 
+    // ... (Keep all other save handlers: handleSaveLogo, handleSaveBanner, handleSavePhotos, handleSaveSocial, handleSaveVideos)
     // Save Logo
     const handleSaveLogo = async (e) => {
         e.preventDefault();
         if (!logoFile) {
-            setError('Please select a logo file');
             alert('⚠️ WARNING: Please select a logo file first.');
             return;
         }
@@ -201,7 +240,7 @@ function EmpCompanyProfilePage() {
             const formData = new FormData();
             formData.append('logo', logoFile);
 
-            const response = await axios.put(
+            await axios.put(
                 `${API_URL}/profiles/update-logo/`,
                 formData,
                 {
@@ -229,7 +268,6 @@ function EmpCompanyProfilePage() {
     const handleSaveBanner = async (e) => {
         e.preventDefault();
         if (!bannerFile) {
-            setError('Please select a banner file');
             alert('⚠️ WARNING: Please select a banner image first.');
             return;
         }
@@ -243,7 +281,7 @@ function EmpCompanyProfilePage() {
             const formData = new FormData();
             formData.append('banner_image', bannerFile);
 
-            const response = await axios.put(
+            await axios.put(
                 `${API_URL}/profiles/update-banner/`,
                 formData,
                 {
@@ -271,7 +309,6 @@ function EmpCompanyProfilePage() {
     const handleSavePhotos = async (e) => {
         e.preventDefault();
         if (photoFiles.length === 0) {
-            setError('Please select at least one photo');
             alert('⚠️ WARNING: Please select at least one photo to upload.');
             return;
         }
@@ -282,12 +319,12 @@ function EmpCompanyProfilePage() {
 
         try {
             const token = localStorage.getItem('access_token');
-            
+
             let uploadedCount = 0;
             for (const file of photoFiles) {
                 const formData = new FormData();
                 formData.append('image', file);
-                
+
                 await axios.post(
                     `${API_URL}/photos/`,
                     formData,
@@ -300,7 +337,7 @@ function EmpCompanyProfilePage() {
                 );
                 uploadedCount++;
             }
-            
+
             setMessage(`✅ ${uploadedCount} photo(s) uploaded successfully!`);
             alert(`✅ SUCCESS: ${uploadedCount} photo(s) have been uploaded to your gallery!`);
             setPhotoFiles([]);
@@ -324,10 +361,10 @@ function EmpCompanyProfilePage() {
 
         try {
             const token = localStorage.getItem('access_token');
-            const response = await axios.put(
+            await axios.put(
                 `${API_URL}/profiles/update-social-links/`,
                 socialLinks,
-                { headers: { 'Authorization': `Bearer ${token}` }}
+                { headers: { 'Authorization': `Bearer ${token}` } }
             );
             setMessage('✅ Social links updated successfully!');
             alert('✅ SUCCESS: Social media links have been updated successfully!');
@@ -353,20 +390,19 @@ function EmpCompanyProfilePage() {
             const token = localStorage.getItem('access_token');
             const filteredYoutube = youtubeLinks.filter(link => link.trim() !== '');
             const filteredVimeo = vimeoLinks.filter(link => link.trim() !== '');
-            
-            const response = await axios.put(
+
+            await axios.put(
                 `${API_URL}/profiles/update-video-links/`,
                 {
                     youtube_links: filteredYoutube,
                     vimeo_links: filteredVimeo
                 },
-                { headers: { 'Authorization': `Bearer ${token}` }}
+                { headers: { 'Authorization': `Bearer ${token}` } }
             );
-            
+
             const totalLinks = filteredYoutube.length + filteredVimeo.length;
             setMessage(`✅ ${totalLinks} video link(s) updated successfully!`);
-            alert(`✅ SUCCESS: ${totalLinks} video link(s) have been updated!\n\n` +
-                  `YouTube: ${filteredYoutube.length}\nVimeo: ${filteredVimeo.length}`);
+            alert(`✅ SUCCESS: ${totalLinks} video link(s) have been updated!\n\nYouTube: ${filteredYoutube.length}\nVimeo: ${filteredVimeo.length}`);
             fetchProfile();
         } catch (error) {
             const errorMsg = error.response?.data?.detail || error.response?.data?.error || 'Failed to update video links';
@@ -376,10 +412,6 @@ function EmpCompanyProfilePage() {
         } finally {
             setSavingVideos(false);
         }
-    };
-
-    var componentConfig = {
-        postUrl: 'upload.php'
     };
 
     if (loading) {
@@ -395,7 +427,24 @@ function EmpCompanyProfilePage() {
 
     return (
         <>
-<div className="wt-admin-right-page-header clearfix">
+            {/* Image Viewer Modal */}
+            {showImageModal && (
+                <div className="modal fade show" style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.8)' }} onClick={handleCloseModal}>
+                    <div className="modal-dialog modal-lg modal-dialog-centered">
+                        <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                            <div className="modal-header">
+                                <h5 className="modal-title">Image Preview</h5>
+                                <button type="button" className="btn-close" onClick={handleCloseModal}></button>
+                            </div>
+                            <div className="modal-body text-center">
+                                <img src={getImageUrl(viewImage)} alt="Preview" style={{ maxWidth: '100%', maxHeight: '70vh' }} />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            <div className="wt-admin-right-page-header clearfix">
                 <h2>Company Profile!</h2>
                 <div className="breadcrumbs"><a href="#">Home</a><a href="#">Dashboard</a><span>Company Profile!</span></div>
             </div>
@@ -421,16 +470,17 @@ function EmpCompanyProfilePage() {
                 </div>
                 <div className="panel-body wt-panel-body p-a20 p-b0 m-b30 ">
                     <div className="row">
+                        {/* Logo Section */}
                         <div className="col-lg-12 col-md-12">
                             <div className="form-group">
                                 <div className="dashboard-profile-pic">
                                     <div className="dashboard-profile-photo">
-                                        <img src={getImageUrl(profile.logo)} alt="" />
+                                        <img src={getImageUrl(profile?.logo)} alt="Company Logo" />
                                         <div className="upload-btn-wrapper">
                                             <button className="site-button button-sm">Upload Photo</button>
-                                            <input 
-                                                type="file" 
-                                                accept=".jpg, .jpeg, .png" 
+                                            <input
+                                                type="file"
+                                                accept=".jpg, .jpeg, .png"
                                                 onChange={(e) => setLogoFile(e.target.files[0])}
                                             />
                                         </div>
@@ -440,8 +490,8 @@ function EmpCompanyProfilePage() {
                                 {logoFile && (
                                     <div className="mt-3">
                                         <p className="text-muted">Selected: {logoFile.name}</p>
-                                        <button 
-                                            onClick={handleSaveLogo} 
+                                        <button
+                                            onClick={handleSaveLogo}
                                             className="site-button"
                                             disabled={savingLogo}
                                         >
@@ -451,10 +501,28 @@ function EmpCompanyProfilePage() {
                                 )}
                             </div>
                         </div>
+
+                        {/* Banner Section with Preview */}
                         <div className="col-lg-12 col-md-12">
                             <div className="dashboard-cover-pic">
-                                <input 
-                                    type="file" 
+                                {profile?.banner_image && (
+                                    <div className="mb-3 position-relative">
+                                        <img
+                                            src={getImageUrl(profile.banner_image)}
+                                            alt="Current Banner"
+                                            style={{ width: '100%', maxHeight: '300px', objectFit: 'cover', borderRadius: '8px' }}
+                                        />
+                                        <button
+                                            className="btn btn-sm btn-info position-absolute top-0 end-0 m-2"
+                                            onClick={() => handleViewImage(profile.banner_image)}
+                                            style={{ zIndex: 10 }}
+                                        >
+                                            <i className="fa fa-eye"></i> View Full
+                                        </button>
+                                    </div>
+                                )}
+                                <input
+                                    type="file"
                                     accept=".jpg, .jpeg, .png"
                                     className="form-control mb-3"
                                     onChange={(e) => setBannerFile(e.target.files[0])}
@@ -463,8 +531,8 @@ function EmpCompanyProfilePage() {
                                 {bannerFile && (
                                     <div className="mt-3">
                                         <p className="text-muted">Selected: {bannerFile.name}</p>
-                                        <button 
-                                            onClick={handleSaveBanner} 
+                                        <button
+                                            onClick={handleSaveBanner}
                                             className="site-button"
                                             disabled={savingBanner}
                                         >
@@ -477,8 +545,9 @@ function EmpCompanyProfilePage() {
                     </div>
                 </div>
             </div>
-            {/*Basic Information*/}
-             <div className="panel panel-default">
+
+            {/*Basic Information with Location Field*/}
+            <div className="panel panel-default">
                 <div className="panel-heading wt-panel-heading p-a20">
                     <h4 className="panel-tittle m-a0">Basic Informations</h4>
                 </div>
@@ -489,10 +558,10 @@ function EmpCompanyProfilePage() {
                                 <div className="form-group">
                                     <label>Company Name</label>
                                     <div className="ls-inputicon-box">
-                                        <input 
-                                            className="form-control" 
-                                            name="name" 
-                                            type="text" 
+                                        <input
+                                            className="form-control"
+                                            name="name"
+                                            type="text"
                                             placeholder="Company Name"
                                             value={basicInfo.name}
                                             onChange={handleBasicInfoChange}
@@ -505,10 +574,10 @@ function EmpCompanyProfilePage() {
                                 <div className="form-group">
                                     <label>Phone</label>
                                     <div className="ls-inputicon-box">
-                                        <input 
-                                            className="form-control" 
-                                            name="phone" 
-                                            type="text" 
+                                        <input
+                                            className="form-control"
+                                            name="phone"
+                                            type="text"
                                             placeholder="(251) 1234-456-7890"
                                             value={basicInfo.phone}
                                             onChange={handleBasicInfoChange}
@@ -521,9 +590,9 @@ function EmpCompanyProfilePage() {
                                 <div className="form-group">
                                     <label>Email Address</label>
                                     <div className="ls-inputicon-box">
-                                        <input 
-                                            className="form-control" 
-                                            type="email" 
+                                        <input
+                                            className="form-control"
+                                            type="email"
                                             placeholder="Email"
                                             value={user?.email || ''}
                                             disabled
@@ -536,10 +605,10 @@ function EmpCompanyProfilePage() {
                                 <div className="form-group">
                                     <label>Website</label>
                                     <div className="ls-inputicon-box">
-                                        <input 
-                                            className="form-control" 
-                                            name="website" 
-                                            type="text" 
+                                        <input
+                                            className="form-control"
+                                            name="website"
+                                            type="text"
                                             placeholder="https://..."
                                             value={basicInfo.website}
                                             onChange={handleBasicInfoChange}
@@ -552,10 +621,10 @@ function EmpCompanyProfilePage() {
                                 <div className="form-group">
                                     <label>Est. Since</label>
                                     <div className="ls-inputicon-box">
-                                        <input 
-                                            className="form-control" 
-                                            name="established_since" 
-                                            type="text" 
+                                        <input
+                                            className="form-control"
+                                            name="established_since"
+                                            type="text"
                                             placeholder="Since..."
                                             value={basicInfo.established_since}
                                             onChange={handleBasicInfoChange}
@@ -565,11 +634,11 @@ function EmpCompanyProfilePage() {
                                 </div>
                             </div>
                             <div className="col-xl-4 col-lg-12 col-md-12">
-                                <div className="form-group city-outer-bx has-feedback">
+                                <div className="form-group">
                                     <label>Team Size</label>
                                     <div className="ls-inputicon-box">
-                                        <select 
-                                            className="wt-select-box selectpicker form-control" 
+                                        <select
+                                            className="form-control"
                                             name="team_size"
                                             value={basicInfo.team_size}
                                             onChange={handleBasicInfoChange}
@@ -580,17 +649,38 @@ function EmpCompanyProfilePage() {
                                             <option value="20+">20+</option>
                                             <option value="50+">50+</option>
                                             <option value="100+">100+</option>
+                                            <option value="200+">200+</option>
+                                            <option value="500+">500+</option>
                                         </select>
-                                        <i className="fs-input-icon fa fa-sort-numeric-up" />
+                                        <i className="fs-input-icon fa fa-users" />
                                     </div>
                                 </div>
                             </div>
+
+                            {/* NEW LOCATION FIELD */}
+                            <div className="col-xl-12 col-lg-12 col-md-12">
+                                <div className="form-group">
+                                    <label>Location</label>
+                                    <div className="ls-inputicon-box">
+                                        <input
+                                            className="form-control"
+                                            name="location"
+                                            type="text"
+                                            placeholder="City, State, Country"
+                                            value={basicInfo.location}
+                                            onChange={handleBasicInfoChange}
+                                        />
+                                        <i className="fs-input-icon fa fa-map-marker-alt" />
+                                    </div>
+                                </div>
+                            </div>
+
                             <div className="col-md-12">
                                 <div className="form-group">
                                     <label>Description</label>
-                                    <textarea 
-                                        className="form-control" 
-                                        rows={3} 
+                                    <textarea
+                                        className="form-control"
+                                        rows={3}
                                         name="description"
                                         placeholder="Greetings! We are Galaxy Software Development Company."
                                         value={basicInfo.description}
@@ -600,8 +690,8 @@ function EmpCompanyProfilePage() {
                             </div>
                             <div className="col-lg-12 col-md-12">
                                 <div className="text-left">
-                                    <button 
-                                        type="submit" 
+                                    <button
+                                        type="submit"
                                         className="site-button"
                                         disabled={savingBasicInfo}
                                     >
@@ -613,41 +703,121 @@ function EmpCompanyProfilePage() {
                     </form>
                 </div>
             </div>
-            {/*Photo gallery*/}
-            <div className="panel panel-default">
-                <div className="panel-heading wt-panel-heading p-a20">
-                    <h4 className="panel-tittle m-a0">Photo Gallery</h4>
-                </div>
-                <div className="panel-body wt-panel-body p-a20 m-b30 ">
-                    <form onSubmit={handleSavePhotos}>
-                        <div className="row">
-                            <div className="col-lg-12 col-md-12">
-                                <div className="form-group">
-                                    <input 
-                                        type="file" 
-                                        accept=".jpg, .jpeg, .png"
-                                        className="form-control"
-                                        multiple
-                                        onChange={(e) => setPhotoFiles(Array.from(e.target.files))}
+
+        {/*Photo gallery with Preview and Eye Icon*/}
+<div className="panel panel-default">
+    <div className="panel-heading wt-panel-heading p-a20">
+        <h4 className="panel-tittle m-a0">Photo Gallery</h4>
+    </div>
+    <div className="panel-body wt-panel-body p-a20 m-b30 ">
+        {/* Display existing photos */}
+        {profile?.photos && profile.photos.length > 0 ? (
+            <div className="row mb-4">
+                <div className="col-12">
+                    <h5 className="mb-3">Current Photos ({profile.photos.length})</h5>
+                    <div className="row">
+                        {profile.photos.map((photo) => (
+                            <div key={photo.id} className="col-lg-3 col-md-4 col-sm-6 mb-3">
+                                <div className="position-relative" style={{ 
+                                    height: '200px', 
+                                    overflow: 'hidden', 
+                                    borderRadius: '8px', 
+                                    border: '2px solid #ddd',
+                                    boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+                                }}>
+                                    <img 
+                                        src={getImageUrl(photo.image)} 
+                                        alt={photo.caption || 'Gallery'} 
+                                        style={{ 
+                                            width: '100%', 
+                                            height: '100%', 
+                                            objectFit: 'cover' 
+                                        }}
+                                        onError={(e) => {
+                                            e.target.src = 'images/jobs-company/pic1.jpg';
+                                        }}
                                     />
-                                    <p className="mt-2">Select multiple photos to upload</p>
+                                    <div className="position-absolute top-0 end-0 m-2" style={{ display: 'flex', gap: '5px' }}>
+                                        <button
+                                            className="btn btn-sm btn-info"
+                                            onClick={() => handleViewImage(photo.image)}
+                                            title="View Image"
+                                            style={{ padding: '5px 10px' }}
+                                        >
+                                            <i className="fa fa-eye"></i>
+                                        </button>
+                                        <button
+                                            className="btn btn-sm btn-danger"
+                                            onClick={() => handleDeletePhoto(photo.id)}
+                                            title="Delete Image"
+                                            style={{ padding: '5px 10px' }}
+                                        >
+                                            <i className="fa fa-trash"></i>
+                                        </button>
+                                    </div>
+                                    {photo.caption && (
+                                        <div className="position-absolute bottom-0 start-0 end-0 p-2 text-white text-center" 
+                                             style={{ 
+                                                 backgroundColor: 'rgba(0,0,0,0.7)',
+                                                 fontSize: '12px'
+                                             }}>
+                                            {photo.caption}
+                                        </div>
+                                    )}
                                 </div>
                             </div>
-                            <div className="col-lg-12 col-md-12">
-                                <div className="text-left">
-                                    <button 
-                                        type="submit" 
-                                        className="site-button"
-                                        disabled={savingPhotos || photoFiles.length === 0}
-                                    >
-                                        {savingPhotos ? 'Uploading...' : 'Save Photos'}
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+                        ))}
+                    </div>
                 </div>
             </div>
+        ) : (
+            <div className="alert alert-info">
+                <i className="fa fa-info-circle"></i> No photos uploaded yet. Upload some photos below!
+            </div>
+        )}
+
+        {/* Upload new photos */}
+        <form onSubmit={handleSavePhotos}>
+            <div className="row">
+                <div className="col-lg-12 col-md-12">
+                    <div className="form-group">
+                        <label><strong>Upload New Photos</strong></label>
+                        <input 
+                            type="file" 
+                            accept=".jpg, .jpeg, .png"
+                            className="form-control"
+                            multiple
+                            onChange={(e) => {
+                                const files = Array.from(e.target.files);
+                                setPhotoFiles(files);
+                                console.log('Selected files:', files.length);
+                            }}
+                        />
+                        <small className="text-muted mt-2 d-block">
+                            Select multiple photos to upload (JPG, JPEG, PNG)
+                        </small>
+                        {photoFiles.length > 0 && (
+                            <div className="alert alert-success mt-2">
+                                {photoFiles.length} file(s) selected
+                            </div>
+                        )}
+                    </div>
+                </div>
+                <div className="col-lg-12 col-md-12">
+                    <div className="text-left">
+                        <button 
+                            type="submit" 
+                            className="site-button"
+                            disabled={savingPhotos || photoFiles.length === 0}
+                        >
+                            {savingPhotos ? 'Uploading...' : `Upload  Photo`}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 
             {/*Video gallery*/}
             <div className="panel panel-default">
@@ -662,17 +832,17 @@ function EmpCompanyProfilePage() {
                                     <label>Youtube</label>
                                     {youtubeLinks.map((link, index) => (
                                         <div key={index} className="ls-inputicon-box mb-3">
-                                            <input 
-                                                className="form-control wt-form-control" 
-                                                type="text" 
+                                            <input
+                                                className="form-control wt-form-control"
+                                                type="text"
                                                 placeholder="https://www.youtube.com/"
                                                 value={link}
                                                 onChange={(e) => handleYoutubeChange(index, e.target.value)}
                                             />
                                             <i className="fs-input-icon fab fa-youtube" />
                                             {index > 0 && (
-                                                <a 
-                                                    href="#" 
+                                                <a
+                                                    href="#"
                                                     className="remove_field"
                                                     onClick={(e) => { e.preventDefault(); removeYoutubeField(index); }}
                                                 >
@@ -682,9 +852,9 @@ function EmpCompanyProfilePage() {
                                         </div>
                                     ))}
                                     <div className="text-right m-tb10">
-                                        <button 
+                                        <button
                                             type="button"
-                                            className="add_field_youtube" 
+                                            className="add_field_youtube"
                                             onClick={addYoutubeField}
                                         >
                                             Add More Fields <i className="fa fa-plus" />
@@ -697,17 +867,17 @@ function EmpCompanyProfilePage() {
                                     <label>Vimeo</label>
                                     {vimeoLinks.map((link, index) => (
                                         <div key={index} className="ls-inputicon-box mb-3">
-                                            <input 
-                                                className="form-control wt-form-control" 
-                                                type="text" 
+                                            <input
+                                                className="form-control wt-form-control"
+                                                type="text"
                                                 placeholder="https://vimeo.com/"
                                                 value={link}
                                                 onChange={(e) => handleVimeoChange(index, e.target.value)}
                                             />
                                             <i className="fs-input-icon fab fa-vimeo-v" />
                                             {index > 0 && (
-                                                <a 
-                                                    href="#" 
+                                                <a
+                                                    href="#"
                                                     className="remove_field"
                                                     onClick={(e) => { e.preventDefault(); removeVimeoField(index); }}
                                                 >
@@ -717,9 +887,9 @@ function EmpCompanyProfilePage() {
                                         </div>
                                     ))}
                                     <div className="text-right m-tb10">
-                                        <button 
+                                        <button
                                             type="button"
-                                            className="add_field_vimeo" 
+                                            className="add_field_vimeo"
                                             onClick={addVimeoField}
                                         >
                                             Add More Fields <i className="fa fa-plus" />
@@ -729,8 +899,8 @@ function EmpCompanyProfilePage() {
                             </div>
                             <div className="col-lg-12 col-md-12">
                                 <div className="text-left">
-                                    <button 
-                                        type="submit" 
+                                    <button
+                                        type="submit"
                                         className="site-button"
                                         disabled={savingVideos}
                                     >
@@ -755,10 +925,10 @@ function EmpCompanyProfilePage() {
                                 <div className="form-group">
                                     <label>Facebook</label>
                                     <div className="ls-inputicon-box">
-                                        <input 
-                                            className="form-control wt-form-control" 
-                                            name="facebook" 
-                                            type="text" 
+                                        <input
+                                            className="form-control wt-form-control"
+                                            name="facebook"
+                                            type="text"
                                             placeholder="https://www.facebook.com/"
                                             value={socialLinks.facebook}
                                             onChange={handleSocialChange}
@@ -771,10 +941,10 @@ function EmpCompanyProfilePage() {
                                 <div className="form-group">
                                     <label>Twitter</label>
                                     <div className="ls-inputicon-box">
-                                        <input 
-                                            className="form-control wt-form-control" 
-                                            name="twitter" 
-                                            type="text" 
+                                        <input
+                                            className="form-control wt-form-control"
+                                            name="twitter"
+                                            type="text"
                                             placeholder="https://twitter.com/"
                                             value={socialLinks.twitter}
                                             onChange={handleSocialChange}
@@ -787,10 +957,10 @@ function EmpCompanyProfilePage() {
                                 <div className="form-group">
                                     <label>LinkedIn</label>
                                     <div className="ls-inputicon-box">
-                                        <input 
-                                            className="form-control wt-form-control" 
-                                            name="linkedin" 
-                                            type="text" 
+                                        <input
+                                            className="form-control wt-form-control"
+                                            name="linkedin"
+                                            type="text"
                                             placeholder="https://in.linkedin.com/"
                                             value={socialLinks.linkedin}
                                             onChange={handleSocialChange}
@@ -803,10 +973,10 @@ function EmpCompanyProfilePage() {
                                 <div className="form-group">
                                     <label>Whatsapp</label>
                                     <div className="ls-inputicon-box">
-                                        <input 
-                                            className="form-control wt-form-control" 
-                                            name="whatsapp" 
-                                            type="text" 
+                                        <input
+                                            className="form-control wt-form-control"
+                                            name="whatsapp"
+                                            type="text"
                                             placeholder="https://www.whatsapp.com/"
                                             value={socialLinks.whatsapp}
                                             onChange={handleSocialChange}
@@ -819,10 +989,10 @@ function EmpCompanyProfilePage() {
                                 <div className="form-group">
                                     <label>Instagram</label>
                                     <div className="ls-inputicon-box">
-                                        <input 
-                                            className="form-control wt-form-control" 
-                                            name="instagram" 
-                                            type="text" 
+                                        <input
+                                            className="form-control wt-form-control"
+                                            name="instagram"
+                                            type="text"
                                             placeholder="https://www.instagram.com/"
                                             value={socialLinks.instagram}
                                             onChange={handleSocialChange}
@@ -835,10 +1005,10 @@ function EmpCompanyProfilePage() {
                                 <div className="form-group">
                                     <label>Pinterest</label>
                                     <div className="ls-inputicon-box">
-                                        <input 
-                                            className="form-control wt-form-control" 
-                                            name="pinterest" 
-                                            type="text" 
+                                        <input
+                                            className="form-control wt-form-control"
+                                            name="pinterest"
+                                            type="text"
                                             placeholder="https://in.pinterest.com/"
                                             value={socialLinks.pinterest}
                                             onChange={handleSocialChange}
@@ -851,10 +1021,10 @@ function EmpCompanyProfilePage() {
                                 <div className="form-group">
                                     <label>Tumblr</label>
                                     <div className="ls-inputicon-box">
-                                        <input 
-                                            className="form-control wt-form-control" 
-                                            name="tumblr" 
-                                            type="text" 
+                                        <input
+                                            className="form-control wt-form-control"
+                                            name="tumblr"
+                                            type="text"
                                             placeholder="https://www.tumblr.com/"
                                             value={socialLinks.tumblr}
                                             onChange={handleSocialChange}
@@ -867,10 +1037,10 @@ function EmpCompanyProfilePage() {
                                 <div className="form-group">
                                     <label>Youtube</label>
                                     <div className="ls-inputicon-box">
-                                        <input 
-                                            className="form-control wt-form-control" 
-                                            name="youtube" 
-                                            type="text" 
+                                        <input
+                                            className="form-control wt-form-control"
+                                            name="youtube"
+                                            type="text"
                                             placeholder="https://www.youtube.com/"
                                             value={socialLinks.youtube}
                                             onChange={handleSocialChange}
@@ -881,8 +1051,8 @@ function EmpCompanyProfilePage() {
                             </div>
                             <div className="col-lg-12 col-md-12">
                                 <div className="text-left">
-                                    <button 
-                                        type="submit" 
+                                    <button
+                                        type="submit"
                                         className="site-button"
                                         disabled={savingSocial}
                                     >

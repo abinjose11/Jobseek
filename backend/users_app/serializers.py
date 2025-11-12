@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import CustomUser,CustomUserManager,CandidateProfile
-from companies_app.models import CompanyProfile
+from companies_app.models import CompanyPhoto, CompanyProfile
 from django.contrib.auth import authenticate
 
 
@@ -83,13 +83,27 @@ class CandidateProfileSerializer(serializers.ModelSerializer):
         read_only_fields = ['user']
 
 
+class CompanyPhotoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CompanyPhoto
+        fields = ['id', 'image', 'caption', 'uploaded_at']
+
+
 # -------------------------
-# Company Profile Serializer
+# Company Profile Serializer (UPDATED)
 # -------------------------
 class CompanyProfileSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(source='user.email', read_only=True)
+    photos = CompanyPhotoSerializer(many=True, read_only=True)  # ✅ ADD THIS LINE
     
     class Meta:
         model = CompanyProfile
-        fields = '__all__'
-        read_only_fields = ['user']
+        fields = [
+            'id', 'name', 'description', 'location', 'email', 'phone',
+            'website', 'established_since', 'team_size', 'logo', 'banner_image',
+            'video', 'facebook', 'twitter', 'linkedin', 'instagram', 'youtube',
+            'whatsapp', 'pinterest', 'tumblr', 'youtube_links', 'vimeo_links',
+            'photos',  # ✅ INCLUDE photos FIELD
+            'is_active', 'created_at', 'updated_at'
+        ]
+        read_only_fields = ['user', 'id', 'email', 'created_at', 'updated_at']
